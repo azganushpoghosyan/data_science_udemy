@@ -16,6 +16,21 @@ data.head()
 x1 = data[["size", "year", "view"]]
 y = data["price"]
 
+# simple linear regression with statsmodel
 x = sm.add_constant(x1)
 result = sm.OLS(y, x).fit()
 result.summary()
+
+x = sm.add_constant(x1)
+result = sm.OLS(y, x).fit()
+result.summary()
+
+new_data = pd.DataFrame({"const": 1, "size": [620.54, 569.33], "year": [2017, 2019], "view": [0, 1]})                        
+new_data = new_data[["const", "size", "year", "view"]]
+
+predictions = result.predict(new_data)
+predictions
+
+predictions_df = pd.DataFrame({"predictions": predictions})
+joined_df = new_data.join(predictions_df)
+joined_df.rename(index = {0:"house_1", 1:"house_2"})
