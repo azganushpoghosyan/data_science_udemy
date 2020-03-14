@@ -20,7 +20,7 @@ plt.xlabel("size", fontsize = 20)
 plt.ylabel("price", fontsize = 20)
 plt.show()
 
-#regression model
+#regression model with statsmodels
 
 x = sm.add_constant(x1)
 result = sm.OLS(y, x).fit()
@@ -32,3 +32,5 @@ fig = plt.plot(x1, yhat, lw = 4, color = "coral", label = "regression line")
 plt.xlabel("size", fontsize = 20)
 plt.ylabel("price", fontsize = 20)
 plt.show()
+
+# regression with sklearn
