@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+sns.set()
+
+#load the data and explore
+
+data = pd.read_csv("real_estate_price_size_year.csv")
+data.describe()
+data.head()
+
+y = data['price']
+x1 = data[['size', 'year']]
+
+#model
+
+x = sm.add_constant(x1)
+result = sm.OLS(y, x).fit()
+result.summary()
