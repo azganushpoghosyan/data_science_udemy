@@ -19,3 +19,28 @@ x1 = data[['size', 'year']]
 x = sm.add_constant(x1)
 result = sm.OLS(y, x).fit()
 result.summary()
+
+# multiple linear regression with sklearn
+from sklearn.linear_model import LinearRegreession
+reg = LinearRegression()
+reg.fit(x1, y)
+reg.intercept_
+reg.coef_
+reg.score(x1, y)
+def adjusted_r2(x, y):
+  r2 = reg.score(x, y)
+  n = x.shape[0]
+  p = x.shape[1]
+  return 1 - (1-r2)*(n-1)/(n-p-1)
+ adjusted_r2(x1, y)
+ reg.predict([[750, 2009]])
+# feature selection
+from sklearn.feature_selection import f_regression
+f_regression(x1, y)
+p_values = f_regression(x1, y)[1]
+
+#regression summary
+reg_summary = pd.DataFrame(data = x1.columns.values, columns = ["Features"])
+reg_summary["coefficients"] = reg.coef_
+reg_summary["p_values"] = p_values
+reg_summary
