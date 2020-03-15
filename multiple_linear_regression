@@ -32,8 +32,8 @@ def adjusted_r2(x, y):
   n = x.shape[0]
   p = x.shape[1]
   return 1 - (1-r2)*(n-1)/(n-p-1)
- adjusted_r2(x1, y)
- reg.predict([[750, 2009]])
+adjusted_r2(x1, y)
+reg.predict([[750, 2009]])
 # feature selection
 from sklearn.feature_selection import f_regression
 f_regression(x1, y)
@@ -44,3 +44,22 @@ reg_summary = pd.DataFrame(data = x1.columns.values, columns = ["Features"])
 reg_summary["coefficients"] = reg.coef_
 reg_summary["p_values"] = p_values
 reg_summary
+
+# regression with standardazitaion
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(x1)
+x_scaled = scaler.transform(x1)
+
+reg = LinearRegression()
+reg.fit(x_scaled, y)
+reg.intercept_
+reg.coef_
+reg.score(x_scaled, y)
+adjusted_r2(x_scaled, y)
+
+#scale new data to predict price
+new_data = [[750, 2009]]
+new_data_scaled = scaler.transform(new_data)
+
+p_values_scaled = f_regression(x_scaled, y)[1].round(3)
